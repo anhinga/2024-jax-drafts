@@ -11,3 +11,7 @@ with the difference being that we would use a more narrow feedforward network wi
 with fully polymophic neurons as a starting point (the sparsification should, among other things,
 decrease this polymorphism by making the linear combinations of activation functions within neurons
 more sparse).
+
+This is the successful pre-sparsification run we need to learn to reproduce first (in the superfluid setting):
+
+https://github.com/anhinga/julia-flux-drafts/tree/main/arxiv-1606-09470-section3/May-August-2022/v0-1/feedforward-run-3
