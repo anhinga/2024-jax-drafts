@@ -15,3 +15,7 @@ more sparse).
 This is the successful pre-sparsification run we need to learn to reproduce first (in the superfluid setting):
 
 https://github.com/anhinga/julia-flux-drafts/tree/main/arxiv-1606-09470-section3/May-August-2022/v0-1/feedforward-run-3
+
+And, in particular, we'd start to start with implementing a (based on polymorphic neuron) more narrow version of
+
+https://github.com/anhinga/julia-flux-drafts/blob/main/arxiv-1606-09470-section3/May-August-2022/v0-1/feedforward-run-3/feedforward_with_accums.jl
