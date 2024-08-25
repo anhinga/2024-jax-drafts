@@ -17,7 +17,8 @@ For optimization of these weights it suggests using https://github.com/google-de
 >To optimize the values in the tree, you can use JAX's `jax.grad` or `jax.value_and_grad` to compute gradients
 >with respect to the loss function, and `jax.tree_util.tree_map` to apply updates to the tree structure.
 
-[tree_optimization_prototype.py](tree_optimization_prototype.py) - LLM-generated prototype
+[tree_optimization_prototype.py](tree_optimization_prototype.py) - LLM-generated prototype (one needs to replace
+the optimizer with Adam, among other changes)
 
 > **Key Points to Remember:**
 >
