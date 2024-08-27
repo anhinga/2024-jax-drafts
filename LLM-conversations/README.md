@@ -72,3 +72,5 @@ Here's an example: [tree_masked_init_optimize.py](tree_masked_init_optimize.py)
      * The Adam optimizer is used, with the optimization step ensuring that only the optimizable weights are updated.
 
 By following this approach, you ensure that the fixed weights remain untouched while the optimizable weights are initialized randomly and optimized accordingly.
+
+**NOTE**: [tree_masked_init_optimize.py](tree_masked_init_optimize.py) is a useful prototype, but it has bugs (easy to see if one runs it)
