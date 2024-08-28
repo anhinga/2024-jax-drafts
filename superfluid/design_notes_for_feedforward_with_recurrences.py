@@ -91,11 +91,13 @@ soft_local_recurrences =  [matrix_element(interneuron_name(layer, k), "accum", i
 
 # we have input of the final layer as [("output", "dict-1"), ("output", "dict-2")]
 
-def form_layer_inputs(layer): # from 0 + n_layers is the final one
+def form_layer_input(layer): # from 0 + n_layers is the final one
     if layer < n_layers:
         return [(interneuron_name(layer, k), input) for k in range(n_per_layer) for input in soft_inputs]
     else: # assume layer == n_layers
         return [("output", "dict-1"), ("output", "dict-2")]
+
+all_layer_inputs = [form_layer_input(layer) for layer in range(n_layers+1)]
 
 def form_previous_layer_output(layer): # 0 is a special case, otherwise the index is (layer - 1)
     if layer == 0:
@@ -103,7 +105,11 @@ def form_previous_layer_output(layer): # 0 is a special case, otherwise the inde
     else:
         return [(interneuron_name(layer - 1, k), output) for k in range(n_per_layer) for output in soft_outputs]
 
-# feed_forward_connections = [...] 
+all_layer_outputs [form__previous_layer_output(layer) for layer in range(n_layers+1)]
+
+feed_forward_connections = [matrix_element(*output_pair, *input_pair, SENTINEL)
+                            for input_layer in range(n_layers+1) for output_layer in range(input_layer)
+                            for input_pair in all_layer_inputs[input_layer] for output_pair in all_layer_outputs[output_layer]] 
 
 # OBSOLETE BELOW THIS LINE ============================================================================
 
