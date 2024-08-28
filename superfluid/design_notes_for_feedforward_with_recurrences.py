@@ -56,6 +56,7 @@ interneurons = [neuron_self_reference(interneuron_name(layer, k))
 
 timer_accum = matrix_element("timer", "timer", "timer", "timer")
 timer_connect = matrix_element("input", "timer", "timer", "timer")
+self_accum = matrix_element("self", "accum", "self", "result")
 
 # names of inputs and outputs of soft activations
 
