@@ -33,6 +33,22 @@ fluid_activation_template = {key: SENTINEL for key in soft_activations}
 def neuron_self_reference(name):
     return matrix_element(name, ":function", name, ":function")
 
+self_neuron = matrix_element("self", ":function", "self", ":function")
+timer_neuron = matrix_element("timer", ":function", "timer", ":function")
+input_neuron = matrix_element("input", ":function", "input", ":function")
+const_1_neuron = matrix_element("const_1", ":function", "const_1", ":function")
+const_end_neuron = matrix_element("eos", ":function", "eos", ":function")
+output_neuron = matrix_element("output", ":function", "output", ":function")
+
+# the width of interlayer will be 4 neurons (instead of 8 neurons for our situation with different types)
+# the depth will be 5 interlayers, like in Julia experiment.
+
+n_layers = 5
+n_per_layer = 4 # fluid neurons per layer
+
+interneurons = [matrix_element("fluid-"+str(layer)+"-"+str(k), ":function", "fluid-"+str(layer)+"-"+str(k), ":function") 
+                for layer in range(n_layers) for k in range(n_per_layer)]
+
 
 # names of inputs and outputs of soft activations
 
@@ -51,8 +67,6 @@ soft_outputs = ['result', 'norm', 'dot', 'true', 'false', 'const_1', 'char']
 # hard_link!(trainable, "timer", "timer", "timer", "timer")
 # hard_link!(trainable, "input", "timer", "timer", "timer")
 
-# the width of interlayer will be 4 neurons (instead of 8 neurons for our situation with different types)
-# the depth will be 5 interlayers, like in Julia experiment.
 
 # OBSOLETE BELOW THIS LINE ============================================================================
 
