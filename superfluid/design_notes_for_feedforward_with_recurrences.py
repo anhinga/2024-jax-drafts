@@ -33,12 +33,12 @@ fluid_activation_template = {key: SENTINEL for key in soft_activations}
 def neuron_self_reference(name):
     return matrix_element(name, ":function", name, ":function")
 
-self_neuron = matrix_element("self", ":function", "self", ":function")
-timer_neuron = matrix_element("timer", ":function", "timer", ":function")
-input_neuron = matrix_element("input", ":function", "input", ":function")
-const_1_neuron = matrix_element("const_1", ":function", "const_1", ":function")
-const_end_neuron = matrix_element("eos", ":function", "eos", ":function")
-output_neuron = matrix_element("output", ":function", "output", ":function")
+self_neuron = neuron_self_reference("self")
+timer_neuron = neuron_self_reference("timer")
+input_neuron = neuron_self_reference("input")
+const_1_neuron = neuron_self_reference("const_1")
+const_end_neuron = neuron_self_reference("eos")
+output_neuron = neuron_self_reference("output")
 
 # the width of interlayer will be 4 neurons (instead of 8 neurons for our situation with different types)
 # the depth will be 5 interlayers, like in Julia experiment.
@@ -49,7 +49,7 @@ n_per_layer = 4 # fluid neurons per layer
 def interneuron_name(layer, index_within_layer):
     return "fluid-"+str(layer)+"-"+str(index_within_layer)
 
-interneurons = [matrix_element(interneuron_name(layer, k), ":function", interneuron_name(layer, k), ":function") 
+interneurons = [neuron_self_reference(interneuron_name(layer, k)) 
                 for layer in range(n_layers) for k in range(n_per_layer)]
 
 # other hard links
@@ -83,7 +83,7 @@ soft_local_recurrences =  [matrix_element(interneuron_name(layer, k), "accum", i
 #                link!(trainable, input_neuron, input_field, output_neuron, output_field, Float32(0.01*rand(normal_dist_0_1)))
 # end end end end
 
-# we have output of initial layer as ("input", "char"), ("const_1", const_1"), ("eos", "char")
+# we have output of initial layer as ("input", "char"), ("const_1", "const_1"), ("eos", "char")
 
 # we have outputs of an intermediate layer as [(interneuron_name(layer, k), output) for output in soft_outputs]
 
@@ -113,6 +113,22 @@ feed_forward_connections = [matrix_element(*output_pair, *input_pair, SENTINEL)
 
 init_matrix = {'result': add_v_values(self_neuron, timer_neuron, input_neuron, const_1_neuron, const_end_neuron, output_neuron,
                                       *interneurons, timer_accum, timer_connect, *soft_local_recurrences, *feed_forward_connections)}
+
+# now we need an equivalent of
+
+initial_output = {'self': add_v_values(init_matrix, {':function': {'accum_add_args': 1.0}}),
+                  'timer': add_v_values({'timer': {':number': 0.0}}, {':function': {'timer_add_one': 1.0}}),
+                  'input': {':function': {'input_dummy': 1.0}},
+                  'accum': add_v_values({'result': {}}, {':function': {'accum_add_args': 1.0}}),
+                  'norm': add_v_values({'norm': {':number': 1.0}}, {':function': {'max_norm_dict': 1.0}}),
+                  'const_1': add_v_values({'const_1': {':number': 1.0}}, {':function': {'const_1': 1.0}}),
+                  'eos': add_v_values({'char': {'.': 1.0}}, {':function': {'const_end': 1.0}}),
+                  'compare': {':function': {'compare_scalars': 1.0}},
+                  'dot': {':function': {'dot_product': 1.0}},
+                  'output': {':function': {'output_dummy': 1.0}}}
+
+# it needs to contain (':function': fluid_activation_template} and {'result': {}} for all soft neurons
+# and 'self', 'timer', 'input', 'const_1', 'eos', 'output' from here
 
 # OBSOLETE BELOW THIS LINE ============================================================================
 
