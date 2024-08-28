@@ -61,7 +61,8 @@ timer_connect = matrix_element("input", "timer", "timer", "timer")
 
 soft_inputs = ['accum', 'delta', 'dict', 'x', 'y']
 
-# do we want to include constants here, or do we handle them as in Julia?
+# we'll try to handle constant emitting neurons as in Julia version
+
 soft_outputs = ['result', 'norm', 'dot', 'true', 'false', 'const_1', 'char']
 
 # we'll try soft links for local recurrences, unlike 
@@ -69,6 +70,8 @@ soft_outputs = ['result', 'norm', 'dot', 'true', 'false', 'const_1', 'char']
 
 # although this is a delicate thing, in terms of good training behavior
 
+soft_local_recurrences =  [matrix_element(interneuron_name(layer, k), "accum", interneuron_name(layer, k), "result", SENTINEL) 
+                           for layer in range(n_layers) for k in range(n_per_layer)]
 
 
 
