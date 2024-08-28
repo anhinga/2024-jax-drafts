@@ -105,7 +105,7 @@ def form_previous_layer_output(layer): # 0 is a special case, otherwise the inde
     else:
         return [(interneuron_name(layer - 1, k), output) for k in range(n_per_layer) for output in soft_outputs]
 
-all_layer_outputs [form__previous_layer_output(layer) for layer in range(n_layers+1)]
+all_layer_outputs = [form__previous_layer_output(layer) for layer in range(n_layers+1)]
 
 feed_forward_connections = [matrix_element(*output_pair, *input_pair, SENTINEL)
                             for input_layer in range(n_layers+1) for output_layer in range(input_layer)
@@ -121,7 +121,7 @@ manual_fields_of_initial_output = {'self': add_v_values(init_matrix, {':function
                                    'eos': add_v_values({'char': {'.': 1.0}}, {':function': {'const_end': 1.0}}),
                                    'output': {':function': {'output_dummy': 1.0}}}
 
-auto_fields_of_initial_output = {interneuron_name(layer, k): add_v_values({'result': {}}, {':function': fluid_activation_template)}
+auto_fields_of_initial_output = {interneuron_name(layer, k): add_v_values({'result': {}}, {':function': fluid_activation_template})}
 
 initial_output = {**manual_fields_of_initial_output, **auto_fields_of_initial_output}
 
