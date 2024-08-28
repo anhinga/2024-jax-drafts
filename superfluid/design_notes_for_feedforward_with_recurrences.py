@@ -46,9 +46,16 @@ output_neuron = matrix_element("output", ":function", "output", ":function")
 n_layers = 5
 n_per_layer = 4 # fluid neurons per layer
 
-interneurons = [matrix_element("fluid-"+str(layer)+"-"+str(k), ":function", "fluid-"+str(layer)+"-"+str(k), ":function") 
+define interneuron_name(layer, index_within_layer):
+    return "fluid-"+str(layer)+"-"+str(index_within_layer)
+
+interneurons = [matrix_element(interneuron_name(layer, k), ":function", interneuron_name(layer, k), ":function") 
                 for layer in range(n_layers) for k in range(n_per_layer)]
 
+# other hard links
+
+timer_accum = matrix_element("timer", "timer", "timer", "timer")
+timer_connect = matrix_element("input", "timer", "timer", "timer")
 
 # names of inputs and outputs of soft activations
 
@@ -62,10 +69,7 @@ soft_outputs = ['result', 'norm', 'dot', 'true', 'false', 'const_1', 'char']
 
 # although this is a delicate thing, in terms of good training behavior
 
-# but we'll have hard links for all :function to :function recurrencies
-# and there are also hard links like these in Julia:
-# hard_link!(trainable, "timer", "timer", "timer", "timer")
-# hard_link!(trainable, "input", "timer", "timer", "timer")
+
 
 
 # OBSOLETE BELOW THIS LINE ============================================================================
