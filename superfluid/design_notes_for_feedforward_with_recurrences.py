@@ -63,7 +63,7 @@ soft_inputs = ['accum', 'delta', 'dict', 'x', 'y']
 
 # we'll try to handle constant emitting neurons as in Julia version
 
-soft_outputs = ['result', 'norm', 'dot', 'true', 'false', 'const_1', 'char']
+soft_outputs = ['result', 'norm', 'dot', 'true', 'false'] # these are separate: 'const_1', 'char' for "eos" and "input"
 
 # we'll try soft links for local recurrences, unlike 
 # https://github.com/anhinga/julia-flux-drafts/blob/main/arxiv-1606-09470-section3/May-August-2022/v0-1/feedforward-run-3/feedforward_with_accums.jl
@@ -74,6 +74,25 @@ soft_local_recurrences =  [matrix_element(interneuron_name(layer, k), "accum", i
                            for layer in range(n_layers) for k in range(n_per_layer)]
 
 
+# we are porting this logic from Julia
+#
+# for input_layer in 1:n_layers+1
+#    for (input_neuron, input_field) in inputs_next[input_layer]
+#        for output_layer in 1:input_layer
+#            for (output_neuron, output_field) in outputs_this[output_layer]
+#                link!(trainable, input_neuron, input_field, output_neuron, output_field, Float32(0.01*rand(normal_dist_0_1)))
+# end end end end
+
+# we have output of initial layer as ("input", "char"), ("const_1", const_1"), ("eos", "char")
+
+# we have outputs of an intermediate layer as [(interneuron_name(layer, k), output) for output in soft_outputs]
+
+# we have inputs of an intermediate layer as [(interneuron_name(layer, k), input) for output in soft_inputs]
+
+# we have input of the final layer as [("output", "dict-1"), ("output", "dict-2")]
+
+
+# feed_forward_connections = [...] 
 
 # OBSOLETE BELOW THIS LINE ============================================================================
 
