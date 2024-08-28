@@ -101,7 +101,7 @@ all_layer_inputs = [form_layer_input(layer) for layer in range(n_layers+1)]
 
 def form_previous_layer_output(layer): # 0 is a special case, otherwise the index is (layer - 1)
     if layer == 0:
-        return [("input", "char"), ("const_1", const_1"), ("eos", "char")]
+        return [("input", "char"), ("const_1", "const_1"), ("eos", "char")]
     else:
         return [(interneuron_name(layer - 1, k), output) for k in range(n_per_layer) for output in soft_outputs]
 
@@ -114,21 +114,16 @@ feed_forward_connections = [matrix_element(*output_pair, *input_pair, SENTINEL)
 init_matrix = {'result': add_v_values(self_neuron, timer_neuron, input_neuron, const_1_neuron, const_end_neuron, output_neuron,
                                       *interneurons, timer_accum, timer_connect, *soft_local_recurrences, *feed_forward_connections)}
 
-# now we need an equivalent of
+manual_fields_of_initial_output = {'self': add_v_values(init_matrix, {':function': {'accum_add_args': 1.0}}),
+                                   'timer': add_v_values({'timer': {':number': 0.0}}, {':function': {'timer_add_one': 1.0}}),
+                                   'input': {':function': {'input_dummy': 1.0}},
+                                   'const_1': add_v_values({'const_1': {':number': 1.0}}, {':function': {'const_1': 1.0}}),
+                                   'eos': add_v_values({'char': {'.': 1.0}}, {':function': {'const_end': 1.0}}),
+                                   'output': {':function': {'output_dummy': 1.0}}}
 
-initial_output = {'self': add_v_values(init_matrix, {':function': {'accum_add_args': 1.0}}),
-                  'timer': add_v_values({'timer': {':number': 0.0}}, {':function': {'timer_add_one': 1.0}}),
-                  'input': {':function': {'input_dummy': 1.0}},
-                  'accum': add_v_values({'result': {}}, {':function': {'accum_add_args': 1.0}}),
-                  'norm': add_v_values({'norm': {':number': 1.0}}, {':function': {'max_norm_dict': 1.0}}),
-                  'const_1': add_v_values({'const_1': {':number': 1.0}}, {':function': {'const_1': 1.0}}),
-                  'eos': add_v_values({'char': {'.': 1.0}}, {':function': {'const_end': 1.0}}),
-                  'compare': {':function': {'compare_scalars': 1.0}},
-                  'dot': {':function': {'dot_product': 1.0}},
-                  'output': {':function': {'output_dummy': 1.0}}}
+auto_fields_of_initial_output = {interneuron_name(layer, k): add_v_values({'result': {}}, {':function': fluid_activation_template)}
 
-# it needs to contain (':function': fluid_activation_template} and {'result': {}} for all soft neurons
-# and 'self', 'timer', 'input', 'const_1', 'eos', 'output' from here
+initial_output = {**manual_fields_of_initial_output, **auto_fields_of_initial_output}
 
 # OBSOLETE BELOW THIS LINE ============================================================================
 
