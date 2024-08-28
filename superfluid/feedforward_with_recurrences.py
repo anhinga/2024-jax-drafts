@@ -26,4 +26,11 @@ soft_outputs = ['result', 'norm', 'dot', 'true', 'false', 'const_1', 'char']
 
 # work in progress ...
 
+# if we literally copy the Julia experiment, we are doing it without a Self neuron, and we handle
+# the optimization procedure as external (we need to represent both soft link weights and soft activation weights,
+# and optimize with respect to those)
+
+# Later we might decide to upgrade to explicit use of a Self neuron 
+# (which would open various interesting possibilities)
+
 
