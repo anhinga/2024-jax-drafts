@@ -113,7 +113,7 @@ feed_forward_connections = [matrix_element(*output_pair, *input_pair, SENTINEL)
                             for input_pair in all_layer_inputs[input_layer] for output_pair in all_layer_outputs[output_layer]] 
 
 init_matrix = {'result': add_v_values(self_neuron, timer_neuron, input_neuron, const_1_neuron, const_end_neuron, output_neuron,
-                                      *interneurons, timer_accum, timer_connect, *soft_local_recurrences, *feed_forward_connections)}
+                                      *interneurons, timer_accum, timer_connect, self_accum, *soft_local_recurrences, *feed_forward_connections)}
 
 manual_fields_of_initial_output = {'self': add_v_values(init_matrix, {':function': {'accum_add_args': 1.0}}),
                                    'timer': add_v_values({'timer': {':number': 0.0}}, {':function': {'timer_add_one': 1.0}}),
