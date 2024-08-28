@@ -21,7 +21,18 @@
 
 # fluid neurons will have linear combinations of these activation functions
 
-soft_activations = ['accum_add_args', 'max_norm_dict', 'dot_product', 'compare_scalars', 'const_1', 'const_end']
+soft_activations = ['accum_add_args', 'max_norm_dict', 'dot_product', 'compare_scalars']  # these two are not included: 'const_1', 'const_end'
+
+# Define a unique sentinel value that won't appear elsewhere in our data
+SENTINEL = -9999.0
+
+fluid_activation_template = {key: SENTINEL for key in soft_activations}
+
+# a neuron template is a hard link
+
+def neuron_self_reference(name):
+    return matrix_element(name, ":function", name, ":function")
+
 
 # names of inputs and outputs of soft activations
 
