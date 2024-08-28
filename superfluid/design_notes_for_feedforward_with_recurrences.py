@@ -87,10 +87,21 @@ soft_local_recurrences =  [matrix_element(interneuron_name(layer, k), "accum", i
 
 # we have outputs of an intermediate layer as [(interneuron_name(layer, k), output) for output in soft_outputs]
 
-# we have inputs of an intermediate layer as [(interneuron_name(layer, k), input) for output in soft_inputs]
+# we have inputs of an intermediate layer as [(interneuron_name(layer, k), input) for input in soft_inputs]
 
 # we have input of the final layer as [("output", "dict-1"), ("output", "dict-2")]
 
+def form_layer_inputs(layer): # from 0 + n_layers is the final one
+    if layer < n_layers:
+        return [(interneuron_name(layer, k), input) for k in range(n_per_layer) for input in soft_inputs]
+    else: # assume layer == n_layers
+        return [("output", "dict-1"), ("output", "dict-2")]
+
+def form_previous_layer_output(layer): # 0 is a special case, otherwise the index is (layer - 1)
+    if layer == 0:
+        return [("input", "char"), ("const_1", const_1"), ("eos", "char")]
+    else:
+        return [(interneuron_name(layer - 1, k), output) for k in range(n_per_layer) for output in soft_outputs]
 
 # feed_forward_connections = [...] 
 
