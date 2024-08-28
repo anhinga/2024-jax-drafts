@@ -108,7 +108,7 @@ def form_previous_layer_output(layer): # 0 is a special case, otherwise the inde
 
 all_layer_outputs = [form_previous_layer_output(layer) for layer in range(n_layers+1)]
 
-feed_forward_connections = [matrix_element(*output_pair, *input_pair, SENTINEL)
+feed_forward_connections = [matrix_element(*input_pair, *output_pair, SENTINEL)
                             for input_layer in range(n_layers+1) for output_layer in range(input_layer)
                             for input_pair in all_layer_inputs[input_layer] for output_pair in all_layer_outputs[output_layer]] 
 
