@@ -30,7 +30,23 @@ soft_outputs = ['result', 'norm', 'dot', 'true', 'false', 'const_1', 'char']
 # the optimization procedure as external (we need to represent both soft link weights and soft activation weights,
 # and optimize with respect to those)
 
-# Later we might decide to upgrade to explicit use of a Self neuron 
-# (which would open various interesting possibilities)
+# But we might as well do it with a Self neuron with hard links, following an example at `immutable_machine2.py`
 
+# However, there is a caveat: in that example, `init_matrix` and `:function` dictionaries are
+# not fixed, but are rotating with a machine using local recurrences.
+
+# If we do it this way, we'll need to figure out, how to reconcile this procedure
+# for external data with presence of Self:
+#    # Apply mask to gradients
+#    mask = mask_tree(tree_structure)
+#    grads = tree_util.tree_map(lambda g, m: g if m else 0, grads, mask)
+#    
+#    updates, opt_state = optimizer.update(grads, opt_state)
+#    new_tree = optax.apply_updates(tree, updates)
+#    
+#    return new_tree, opt_state, loss
+# So, instead of a trivial action of Self and of local recurrences for :function dictionaries
+# we want to have these updates (but when we are just running a trained network,
+# we basically want to assume that grads are all zeros, the whole thing is a mask;
+# that would be a "Self-frienly architecture").
 
