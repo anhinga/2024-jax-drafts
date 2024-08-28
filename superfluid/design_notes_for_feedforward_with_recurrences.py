@@ -46,7 +46,7 @@ output_neuron = matrix_element("output", ":function", "output", ":function")
 n_layers = 5
 n_per_layer = 4 # fluid neurons per layer
 
-define interneuron_name(layer, index_within_layer):
+def interneuron_name(layer, index_within_layer):
     return "fluid-"+str(layer)+"-"+str(index_within_layer)
 
 interneurons = [matrix_element(interneuron_name(layer, k), ":function", interneuron_name(layer, k), ":function") 
@@ -110,6 +110,9 @@ all_layer_outputs [form__previous_layer_output(layer) for layer in range(n_layer
 feed_forward_connections = [matrix_element(*output_pair, *input_pair, SENTINEL)
                             for input_layer in range(n_layers+1) for output_layer in range(input_layer)
                             for input_pair in all_layer_inputs[input_layer] for output_pair in all_layer_outputs[output_layer]] 
+
+init_matrix = {'result': add_v_values(self_neuron, timer_neuron, input_neuron, const_1_neuron, const_end_neuron, output_neuron,
+                                      *interneurons, timer_accum, timer_connect, *soft_local_recurrences, *feed_forward_connections)}
 
 # OBSOLETE BELOW THIS LINE ============================================================================
 
