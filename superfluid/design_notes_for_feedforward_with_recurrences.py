@@ -121,7 +121,8 @@ manual_fields_of_initial_output = {'self': add_v_values(init_matrix, {':function
                                    'eos': add_v_values({'char': {'.': 1.0}}, {':function': {'const_end': 1.0}}),
                                    'output': {':function': {'output_dummy': 1.0}}}
 
-auto_fields_of_initial_output = {interneuron_name(layer, k): add_v_values({'result': {}}, {':function': fluid_activation_template})}
+auto_fields_of_initial_output = {interneuron_name(layer, k): add_v_values({'result': {}}, {':function': fluid_activation_template})
+                                 for layer in range(n_layers) for k in range(n_per_layer)}
 
 initial_output = {**manual_fields_of_initial_output, **auto_fields_of_initial_output}
 
