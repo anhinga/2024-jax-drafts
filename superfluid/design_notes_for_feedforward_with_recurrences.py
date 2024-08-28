@@ -1,5 +1,24 @@
 # trying to sketch a feedword network with fluid neurons and optional local recurrences
 
+# and we are going to optimize with respect to it after a run
+
+# so the network is described by `initial_output` dictionary, just like in `immutable_machine2.py`
+
+# this `initial_output` dictionary has somewhere in it the `init_matrix` and
+# all the `:function` dictionaries
+
+# and this `initial_output` dictionary has hard leaves (constant leaves)
+# and soft leaves ("sentinel" leaves) which are subject to initialization
+# and optimization
+
+# if we, at some point, decide to implement a "continual learning", where
+# the gradient change things while the network is running, we'll modify this accordingly
+
+# this experiment is still somewhat static, run the network, compute loss and grad,
+# apply gradient-based update to a masked `initial_output`, run the network again,
+# and so on
+
+
 # fluid neurons will have linear combinations of these activation functions
 
 soft_activations = ['accum_add_args', 'max_norm_dict', 'dot_product', 'compare_scalars', 'const_1', 'const_end']
@@ -24,11 +43,16 @@ soft_outputs = ['result', 'norm', 'dot', 'true', 'false', 'const_1', 'char']
 # the width of interlayer will be 4 neurons (instead of 8 neurons for our situation with different types)
 # the depth will be 5 interlayers, like in Julia experiment.
 
+# OBSOLETE BELOW THIS LINE ============================================================================
+
 # work in progress ...
 
 # if we literally copy the Julia experiment, we are doing it without a Self neuron, and we handle
 # the optimization procedure as external (we need to represent both soft link weights and soft activation weights,
 # and optimize with respect to those)
+
+# DELETED Later we might decide to upgrade to explicit use of a Self neuron 
+# DELETED (which would open various interesting possibilities)
 
 # But we might as well do it with a Self neuron with hard links, following an example at `immutable_machine2.py`
 
