@@ -1,5 +1,6 @@
 a run similar to
 https://github.com/anhinga/jax-pytree-example/blob/main/September-2023/run-150.txt
+but for a slightly under 3000 links feedforward network
 
 It's fairly slow, though, the network run takes almost a minute, 
 and even something as simple as this takes almost 6 seconds:
@@ -175,4 +176,13 @@ $ cat immutable_utils.py immutable_ops.py immutable_activations.py immutable_eng
  (148, 149.0, {}, 0.057, 0.139, 0.18, 0.066),
  (149, 150.0, {}, 0.057, 0.139, 0.18, 0.066)]
 5.824293613433838  seconds
+>>> leaves, treedef = tree_util.tree_flatten(initial_output)
+>>> len(leaves)
+2944
+>>> len([k for k in leaves if k == SENTINEL])
+2906
+>>> len([k for k in leaves if k == 1.0])
+37
+>>> len([k for k in leaves if k == 0.0])
+1
 >>>
