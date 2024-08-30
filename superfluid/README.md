@@ -28,3 +28,6 @@ In a superfluid version, we can't do that, because we don't know how much of an 
 
 So what we should try is a new regularization term, the abs(weight_of_accum_activation - weight_of_recurrent connection)
 or its square must be low.
+
+(It's still fine to include these weights into usual regularization terms. This new regularization term should have
+a larger coefficient than usual regularization terms, so that it impact on these particular weights dominate.)
