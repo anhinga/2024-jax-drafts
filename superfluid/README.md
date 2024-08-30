@@ -19,3 +19,12 @@ https://github.com/anhinga/julia-flux-drafts/tree/main/arxiv-1606-09470-section3
 And, in particular, we'd start to start with implementing a (based on polymorphic neuron) more narrow version of
 
 https://github.com/anhinga/julia-flux-drafts/blob/main/arxiv-1606-09470-section3/May-August-2022/v0-1/feedforward-run-3/feedforward_with_accums.jl
+
+### A novel regularization formula
+
+In our Julia implementation, locally recurrent connection for accumulators were implemented as hard links with weight 1.
+
+In a superfluid version, we can't do that, because we don't know how much of an accumulator would a neuron be.
+
+So what we should try is a new regularization term, the abs(weight_of_accum_activation - weight_of_recurrent connection)
+or its square must be low.
