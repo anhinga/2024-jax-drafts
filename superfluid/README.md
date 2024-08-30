@@ -22,9 +22,9 @@ https://github.com/anhinga/julia-flux-drafts/blob/main/arxiv-1606-09470-section3
 
 ### A novel regularization formula
 
-In our Julia implementation, locally recurrent connection for accumulators were implemented as hard links with weight 1.
+In our Julia implementation, locally recurrent connections for accumulators were implemented as hard links with weight 1.
 
-In a superfluid version, we can't do that, because we don't know how much of an accumulator would a neuron be.
+In a superfluid version, we can't do that, because we don't know how much of an accumulator a neuron would be.
 
 So what we should try is a new regularization term, the abs(weight_of_accum_activation - weight_of_recurrent connection)
 or its square must be low.
