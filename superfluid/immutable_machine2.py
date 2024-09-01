@@ -43,6 +43,8 @@ initial_output = {'self': add_v_values(init_matrix, {':function': {'accum_add_ar
                   'compare': {':function': {'compare_scalars': 1.0}},
                   'dot': {':function': {'dot_product': 1.0}},
                   'output': {':function': {'output_dummy': 1.0}}}
+                  
+initial_output_manual = initial_output
 
 from pprint import pprint
 
