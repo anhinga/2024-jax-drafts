@@ -6,7 +6,7 @@ print("size (leaves):", len(leaves), len([k for k in leaves if k == SENTINEL]),
 
 start_time = time.time()
 
-initial_output_init = create_tree(rng_key, initial_output)
+changing_output = create_tree(rng_key, initial_output)
 
 from pprint import pprint
 
@@ -55,11 +55,15 @@ result, last_state = reduce(one_iteration, range(150), ({}, {'input': {}, 'outpu
 print(time.time()-start_time, " seconds")
 """
 
-# TODO: ACTUALLY WRITE THIS FUNCTION
 def loss_fn(state):
-    trace, new_state = reduce(one_iteration, range(5), ({}, state))
+    trace, new_state = reduce(one_iteration, range(140), ({}, state))
+    trace_manual = reduce(one_iteration, range(140), ({}, initial_output_manual))
     first = [trace[key]['input']['output']['dict-1'][':number'] for key in trace]
     second = [trace[key]['input']['output']['dict-1'][':number'] for key in trace]
+    first_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace]
+    second_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace]
+    unregularized_loss =  
+    # TODO: ADD REGULARIZATION (STANDARD AND NOVEL)
     return sum([square(x-10.0) for x in first]) + sum([square(x-10.0) for x in second]) 
 
 # Mask to ensure updates only apply to optimizable weights
@@ -67,24 +71,33 @@ mask_tree = tree_util.tree_map(lambda x: x == SENTINEL, initial_output)
 
 # Adam optimizer
 optimizer = optax.adam(learning_rate=0.1) # might dial it back to 0.001, but we'll see; let's start ambitious
-opt_state = optimizer.init(initial_output_init)
+opt_state = optimizer.init(changing_output)
 
 # Define the optimization step
 @jax.jit
 def step(tree, opt_state):
+    start_time = time.time()
     loss, grads = jax.value_and_grad(loss_fn)(tree)
+    print(time.time()-start_time, " seconds to compute gradient")
     
     # Apply mask to gradients
+    start_time = time.time()
     grads = tree_util.tree_map(lambda g, m: g if m else 0, grads, mask_tree)
+    print(time.time()-start_time, " seconds to apply mask to gradient")
     
+    start_time = time.time() 
     updates, opt_state = optimizer.update(grads, opt_state)
+    print(time.time()-start_time, " seconds to compute optimizer update") 
+ 
+    start_time = time.time()
     new_tree = optax.apply_updates(tree, updates)
+    print(time.time()-start_time, " seconds to apply optimizer update")
     
     return new_tree, opt_state, loss
     
 # Run optimization for 3 steps
 for step in range(3):
-    random_tree, opt_state, loss = step(random_tree, opt_state)
+    changing_output, opt_state, loss = step(changing_output, opt_state)
     print(f'step: {step} loss: {loss}')
 
 """
