@@ -97,7 +97,67 @@ This code shows how to extract and update the tree (parameters) using the Optax 
 After the update, `updated_tree` will contain the new parameter values.
 
 **NOTE**: I did not read the above fully and continued the conversation (perhaps it was enough just to
-read what the model said carefully; but what it is saying is a bit ambiguous)
+read what the model said carefully; but what it is saying is a bit ambiguous). In reality, the bulk
+of confusion stems from my own mistake (I misread what the parameter of the loss function should be).
+
+In any case, let's record the rest of the conversaion.
   
+**ME:**
+
+Thanks, that's very cool! I think my tree is probably in opt_state[0] indeed, but I am a bit confused about types. Should I just disregard them. The types are as follows:
+
+>>> type(tree)
+
+<class 'dict'>
+
+>>> type(opt_state[0])
+
+<class 'optax._src.transform.ScaleByAdamState'>
+>>>
+
+**GPT-4o:**
+
+You're right to notice the difference in types between `tree` and `opt_state[0]`. 
+The discrepancy is because `opt_state[0]` isn't directly your parameter tree;
+rather, it's a specific structure used internally by the Adam optimizer 
+to track various aspects of the optimization process, such as moment estimates.
+
+**Understanding the Types:**
+
+  * **tree:** This is a Python dictionary (`<class 'dict'>`), which is likely structured as a PyTree (a nested structure of arrays, lists, tuples, dictionaries, etc.).
+  * **opt_state[0]:** This is an instance of `optax._src.transform.ScaleByAdamState`, which is a custom data structure used by Optax to store the state of the optimizer, including things like the moving averages of the gradients (first and second moments in the case of Adam).
+
+**What `opt_state[0]` Contains:**
+
+The `ScaleByAdamState` typically includes:
+
+  * **mu:** The first moment (mean) of the gradients.
+  * **nu:** The second moment (uncentered variance) of the gradients.
+  * **count:** A counter that tracks the number of updates applied.
+
+These are not the parameters themselves but values that the optimizer uses internally to adjust the learning process.
+
+**Extracting the Tree (Parameters):**
+
+The actual parameters (i.e., the `tree`) are not directly stored in `opt_state[0]`. 
+Instead, `opt_state[0]` holds the state variables used to update the parameters. 
+To access or modify the actual parameter values, you should interact with the tree itself 
+(e.g., params, updated_tree, or the input to the optimizer update function).
+
+If you want to update your parameters, you generally do this:
+
+  **1. Compute Updates:**
+
+```python
+updates, opt_state = optimizer.update(grads, opt_state, tree)
+```
+
+  **2. Apply Updates to Get New Parameters:**
+
+```python
+updated_tree = optax.apply_updates(tree, updates)
+```
+
+
 
 [TO BE CONTINUED}
