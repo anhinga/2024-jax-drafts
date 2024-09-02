@@ -1,4 +1,4 @@
-ME:
+**ME:**
 
 Thanks! So, I have a tree, and an Adam optimizer in Jax, and I used the tree to initialize the state of the optimizer, and I'd like to be able to extract that tree (or its further updates) from the state: 
 
@@ -6,14 +6,14 @@ optimizer = optax.adam(learning_rate=0.1)
 
 opt_state = optimizer.init(tree)
 
-GPT-4o:
+**GPT-4o:**
 
 In JAX, if you're using Optax for optimization and you want to extract the tree (or its updates) from the optimizer state, 
 you can do so by accessing the relevant part of the optimizer state. The `opt_state` returned by `optimizer.init(tree)` contains several elements, including the initial tree you passed in.
 
 Here's how you can extract the tree from the optimizer state:
 
-**Step-by-Step:
+**Step-by-Step:**
 
   **1. Initialize the Optimizer and State: You've already done this step:**
 
@@ -33,5 +33,17 @@ However, the exact structure can vary based on the optimizer. In the case of Ada
 ```python
 opt_state = (OptState, (m, v))
 ```
+
+  **3. Extracting the Tree:** To extract the tree from the opt_state, you can use the following approach:
+
+```python
+params = optimizer.update_fn.init_params(opt_state)
+```
+
+[TO BE CONTINUED]
+
+**NOTE**: I did not read the above fully and continued the conversation (perhaps it was enough just to
+read what the model said carefully
+  
 
 [TO BE CONTINUED}
