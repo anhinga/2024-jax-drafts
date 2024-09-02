@@ -63,3 +63,33 @@ def create_dict(s, i, t):
   * **String to Array Conversion:** Convert the string to an array (`chars`), where each character can be accessed by its index in a JAX-friendly way.
   * **Tuple-Based Return:** Instead of trying to use dynamic dictionary keys, consider returning a tuple of the selected character and its corresponding value. If you absolutely need a dictionary, consider working with static keys or non-traced values.
   * **Handling the Conditional:** The `jax.lax.cond` remains in place to handle the branching based on `t`.
+
+**Alternative: Handling Indexing Separately**
+
+If you cannot restructure the code as suggested, consider performing the slicing or indexing separately before applying any JAX transformations like `jit`:
+
+```python
+# Handle slicing outside of JAX-traced functions
+char = s[i:i+1]
+
+# Then use this in your JAX-compatible function
+def create_dict(char, t):
+    def true_branch(_):
+        return {'char': {char: 1.0}}
+
+    def false_branch(_):
+        return {'char': {}}
+
+    result = jax.lax.cond(t % 10 == 0, true_branch, false_branch, operand=None)
+    return result
+
+result = create_dict(char, t)
+```
+
+**Summary:**
+
+  * **Avoid Dynamic Slicing in Traced Code:** Avoid using operations that require converting traced values to concrete integers, such as string slicing.
+  * **Restructure Logic:** If possible, restructure your logic to avoid dynamic dictionary keys or handle the dynamic part before the JAX transformations.
+  * **Pre-process Before JAX:** If you need to handle dynamic parts (like slicing), do this outside of the traced function before calling any JAX-compatible code.
+
+This approach should resolve the `TracerIntegerConversionError` and allow you to continue with JAX transformations.
