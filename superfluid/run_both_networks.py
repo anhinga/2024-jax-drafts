@@ -60,8 +60,8 @@ print(time.time()-start_time, " seconds")
 """
 
 def loss_fn(changing_output):
-    trace, _ = reduce(one_iteration, range(1), ({}, changing_output))
-    trace_manual, _ = reduce(one_iteration, range(1), ({}, initial_output_manual))
+    trace, _ = reduce(one_iteration, range(1), ({}, {'input': {}, 'output': changing_output}))
+    trace_manual, _ = reduce(one_iteration, range(1), ({}, {'input': {}, 'output': initial_output_manual}))
     first = [trace[key]['input']['output']['dict-1'][':number'] for key in trace]
     second = [trace[key]['input']['output']['dict-2'][':number'] for key in trace]
     first_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace]
