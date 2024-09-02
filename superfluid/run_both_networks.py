@@ -12,6 +12,9 @@ from pprint import pprint
 
 from functools import reduce
 
+def square(x):
+    return x * x
+
 def one_cycle(state):
     return two_stroke_cycle(state['output'])
 
@@ -59,12 +62,14 @@ def loss_fn(state):
     trace, new_state = reduce(one_iteration, range(140), ({}, state))
     trace_manual = reduce(one_iteration, range(140), ({}, initial_output_manual))
     first = [trace[key]['input']['output']['dict-1'][':number'] for key in trace]
-    second = [trace[key]['input']['output']['dict-1'][':number'] for key in trace]
+    second = [trace[key]['input']['output']['dict-2'][':number'] for key in trace]
     first_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace]
-    second_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace]
-    unregularized_loss =  
+    second_manual = [trace_manual[key]['input']['output']['dict-2'][':number'] for key in trace]
+    unregularized_loss = sum(square(x, y) for x, y in zip(first, first_manual)) +
+                         sum(square(x, y) for x, y in zip(second, second_manual))    
     # TODO: ADD REGULARIZATION (STANDARD AND NOVEL)
-    return sum([square(x-10.0) for x in first]) + sum([square(x-10.0) for x in second]) 
+    loss = unregularized_loss
+    return loss
 
 # Mask to ensure updates only apply to optimizable weights
 mask_tree = tree_util.tree_map(lambda x: x == SENTINEL, initial_output)
