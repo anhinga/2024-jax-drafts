@@ -5,6 +5,8 @@ import jax.nn as jnn
 def max_norm(v_value): # we'll also have a slightly different activation function of this kind: v_value -> {'result': max_norm(v_value)} 
     if not isinstance(v_value, dict):
         return jnp.abs(v_value)
+    elif len(v_value) == 0:
+        return jnp.array(0.0)  # Return 0.0 if the dictionary is empty
     else:
         # Using jax.numpy.maximum to replace the max function
         return jnp.maximum(0.0, jnp.max(jnp.array([max_norm(v_value[key]) for key in v_value.keys()])))
