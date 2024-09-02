@@ -1,4 +1,5 @@
 import time
+import optax
 
 leaves, treedef = tree_util.tree_flatten(initial_output)
 print("size (leaves):", len(leaves), len([k for k in leaves if k == SENTINEL]), 
@@ -65,7 +66,7 @@ def loss_fn(state):
     second = [trace[key]['input']['output']['dict-2'][':number'] for key in trace]
     first_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace]
     second_manual = [trace_manual[key]['input']['output']['dict-2'][':number'] for key in trace]
-    unregularized_loss = sum(square(x, y) for x, y in zip(first, first_manual)) +
+    unregularized_loss = sum(square(x, y) for x, y in zip(first, first_manual)) + \
                          sum(square(x, y) for x, y in zip(second, second_manual))    
     # TODO: ADD REGULARIZATION (STANDARD AND NOVEL)
     loss = unregularized_loss
@@ -101,9 +102,9 @@ def step(tree, opt_state):
     return new_tree, opt_state, loss
     
 # Run optimization for 3 steps
-for step in range(3):
+for n_step in range(3):
     changing_output, opt_state, loss = step(changing_output, opt_state)
-    print(f'step: {step} loss: {loss}')
+    print(f'step: {n_step} loss: {loss}')
 
 """
 start_time = time.time()
