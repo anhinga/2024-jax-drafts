@@ -59,9 +59,9 @@ result, last_state = reduce(one_iteration, range(150), ({}, {'input': {}, 'outpu
 print(time.time()-start_time, " seconds")
 """
 
-def loss_fn(state):
-    trace, new_state = reduce(one_iteration, range(140), ({}, state))
-    trace_manual = reduce(one_iteration, range(140), ({}, initial_output_manual))
+def loss_fn(changing_output):
+    trace, _ = reduce(one_iteration, range(1), ({}, changing_output))
+    trace_manual, _ = reduce(one_iteration, range(1), ({}, initial_output_manual))
     first = [trace[key]['input']['output']['dict-1'][':number'] for key in trace]
     second = [trace[key]['input']['output']['dict-2'][':number'] for key in trace]
     first_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace]
@@ -81,9 +81,10 @@ opt_state = optimizer.init(changing_output)
 
 # Define the optimization step
 @jax.jit
-def step(tree, opt_state):
+def step(changing_output, opt_state):
     start_time = time.time()
-    loss, grads = jax.value_and_grad(loss_fn)(tree)
+    print("about to compute gradient")
+    loss, grads = jax.value_and_grad(loss_fn)(changing_output)
     print(time.time()-start_time, " seconds to compute gradient")
     
     # Apply mask to gradients
@@ -96,7 +97,7 @@ def step(tree, opt_state):
     print(time.time()-start_time, " seconds to compute optimizer update") 
  
     start_time = time.time()
-    new_tree = optax.apply_updates(tree, updates)
+    new_tree = optax.apply_updates(changing_output, updates)
     print(time.time()-start_time, " seconds to apply optimizer update")
     
     return new_tree, opt_state, loss
