@@ -40,10 +40,64 @@ opt_state = (OptState, (m, v))
 params = optimizer.update_fn.init_params(opt_state)
 ```
 
-[TO BE CONTINUED]
+However, in most practical cases, you might directly use the `update_fn` from Optax to perform updates on the parameters, 
+which internally manages the state. If you need to inspect or extract the actual parameter values at a given point, consider this:
+
+```python
+tree = opt_state[0]  # If the tree is the first part of the opt_state tuple
+```
+
+This is under the assumption that the tree is stored as the first element in the optimizer state. 
+Depending on how the optimizer is implemented, you might need to adjust the index. 
+If you are unsure about the structure, you can print the `opt_state` to explore its content:
+
+```python
+print(opt_state)
+```
+
+  **4. Updating and Extracting Updated Tree:** When you apply updates using the `optimizer.update` method,
+  you will update the optimizer state, including the tree:
+
+```python
+grads = jax.grad(loss_fn)(params)
+updates, new_opt_state = optimizer.update(grads, opt_state, params)
+new_params = optax.apply_updates(params, updates)
+```
+
+Here, `new_params` would be your updated tree.
+
+**Example in Code:**
+
+```python
+import jax
+import optax
+import jax.numpy as jnp
+
+# Initialize tree and optimizer
+tree = {'param1': jnp.array([1.0, 2.0]), 'param2': jnp.array([3.0, 4.0])}
+optimizer = optax.adam(learning_rate=0.1)
+opt_state = optimizer.init(tree)
+
+# Example loss function
+def loss_fn(params):
+    return jnp.sum(params['param1']**2 + params['param2']**2)
+
+# Compute gradients
+grads = jax.grad(loss_fn)(tree)
+
+# Perform an update
+updates, opt_state = optimizer.update(grads, opt_state, tree)
+updated_tree = optax.apply_updates(tree, updates)
+
+# Extract the updated tree
+print(updated_tree)
+```
+
+This code shows how to extract and update the tree (parameters) using the Optax Adam optimizer. 
+After the update, `updated_tree` will contain the new parameter values.
 
 **NOTE**: I did not read the above fully and continued the conversation (perhaps it was enough just to
-read what the model said carefully
+read what the model said carefully; but what it is saying is a bit ambiguous)
   
 
 [TO BE CONTINUED}
