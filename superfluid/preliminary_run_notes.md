@@ -17,6 +17,7 @@ Learning rate: 0.1, 3 optimization steps
 
 [...]
 
+```
 size (leaves): 2944 2906 37 1
 0.8305931091308594  seconds
 about to compute gradient
@@ -37,18 +38,20 @@ about to compute gradient
 0.7056536674499512  seconds to compute optimizer update
 0.33129143714904785  seconds to apply optimizer update
 step: 2 loss: 0.0007292517693713307
+```
 
 Interestingly, compute gradient takes this time each time,
 but computing optimizer update becomes much faster the second time.
 
 ---
 
-Now let's running networks for 11 iterations.
+Now let's run networks for 11 iterations.
 
 So 10 effective iterations for loss compute with key != 0 excluded
 
 Mmmmm... gradient compute here scales not quite 10 times, but almost so:
 
+```
 size (leaves): 2944 2906 37 1
 0.8378427028656006  seconds
 about to compute gradient
@@ -69,3 +72,34 @@ about to compute gradient
 0.7232344150543213  seconds to compute optimizer update
 0.3300936222076416  seconds to apply optimizer update
 step: 2 loss: 0.013595396652817726
+```
+
+---
+
+Now let's run networks for 101 iterations.
+
+So 100 effective iterations for loss compute with key != 0 excluded
+
+Let's also do 5 steps instead of 3 to get a better feel for this learning rate
+
+Timewise, the scaling is even (very slightly) worse than 10 times:
+
+```
+size (leaves): 2944 2906 37 1
+0.8445765972137451  seconds
+about to compute gradient
+1580.3687193393707  seconds to compute gradient
+0.004025936126708984  seconds to apply mask to gradient
+18.390220642089844  seconds to compute optimizer update
+0.3377394676208496  seconds to apply optimizer update
+step: 0 loss: 169.5692138671875
+about to compute gradient
+1534.9859263896942  seconds to compute gradient
+0.004983663558959961  seconds to apply mask to gradient
+0.7345867156982422  seconds to compute optimizer update
+0.3238065242767334  seconds to apply optimizer update
+step: 1 loss: 119.47352600097656
+about to compute gradient
+```
+
+still running
