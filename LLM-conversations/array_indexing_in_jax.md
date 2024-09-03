@@ -93,3 +93,76 @@ result = create_dict(char, t)
   * **Pre-process Before JAX:** If you need to handle dynamic parts (like slicing), do this outside of the traced function before calling any JAX-compatible code.
 
 This approach should resolve the `TracerIntegerConversionError` and allow you to continue with JAX transformations.
+
+**NOTE:** I was quite hopeful after reading this, but it seems that we have a rather straightforward problem with their proposed solution here.
+We might need to keep this part of code outside of JAX (which is unfortunate, although not the end of the world).
+
+**ME:**
+
+```
+I am afraid I am getting a straightforward problem with that. >>> [char for char in "test string"]
+['t', 'e', 's', 't', ' ', 's', 't', 'r', 'i', 'n', 'g']
+>>> c = [char for char in "test string"]
+>>> jnp.array(c)
+Traceback (most recent call last):
+  File "C:\Users\anhin\.julia\conda\3\lib\site-packages\jax\_src\dtypes.py", line 677, in dtype
+    dt = np.result_type(x)
+TypeError: data type 't' not understood
+```
+
+**GPT-4o:**
+
+You're right; directly converting a list of characters into a JAX array (`jnp.array`) won't work because JAX's `jnp.array` is designed to handle numeric data types like integers and floats, not strings or characters.
+
+**Alternative Approach**
+
+Given this limitation, you need to handle strings and their indexing differently when working with JAX. Since JAX operates mainly on numeric data, the best approach is to avoid trying to work with strings inside JAX's transformations. Instead, you should handle strings in Python before entering the JAX computation.
+
+Here’s how you can modify your code to be more JAX-friendly:
+
+**1. Handle String Indexing Outside JAX**
+
+Perform any string manipulation or indexing outside of the JAX-traced functions. For instance, extract the substring you need (`s[i:i+1]`) before entering the JAX computation.
+
+**2. Pass the Precomputed Character to the JAX Function**
+
+Pass the selected character as a regular Python string (not as part of the traced computation) to avoid errors.
+
+**Example Code:**
+
+```python
+import jax
+import jax.numpy as jnp
+import jax.lax
+
+def create_dict(precomputed_char, t):
+    def true_branch(_):
+        return {'char': {precomputed_char: jnp.array(1.0)}}
+
+    def false_branch(_):
+        return {'char': {}}
+
+    result = jax.lax.cond(t % 10 == 0, true_branch, false_branch, operand=None)
+    return result
+
+# Perform string indexing outside of the JAX-traced function
+s = "test string"
+i = 2
+precomputed_char = s[i:i+1]
+
+t = 20  # Example value
+result = create_dict(precomputed_char, t)
+print(result)
+```
+
+**Explanation:**
+
+  * **Precompute the Character:** `precomputed_char` is computed outside the JAX-traced function, so you avoid issues related to JAX's inability to handle strings natively.
+  * **Use the Character in the JAX Function:** Inside the JAX function, you treat `precomputed_char` as a regular string, which is not traced.
+
+**Summary:**
+
+  * **Avoid JAX with Strings:** JAX is designed for numerical computations, so string manipulation should be handled outside JAX-traced code.
+  * **Pre-process Strings:** Extract or manipulate strings before passing them to JAX functions to avoid conversion issues.
+
+This approach ensures that your code works correctly without running into type conversion errors.
