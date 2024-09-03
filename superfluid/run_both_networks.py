@@ -80,7 +80,7 @@ optimizer = optax.adam(learning_rate=0.1) # might dial it back to 0.001, but we'
 opt_state = optimizer.init(changing_output)
 
 # Define the optimization step
-@jax.jit
+#@jax.jit
 def step(changing_output, opt_state):
     start_time = time.time()
     print("about to compute gradient")

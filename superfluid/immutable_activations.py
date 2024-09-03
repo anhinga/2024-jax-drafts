@@ -54,20 +54,14 @@ def timer_add_one(all_inputs):
 
 import jax.lax
 
-def input_dummy(all_inputs):
-    def true_branch(_):
-        return {'char': {s[i:i+1]: 1.0}}
-
-    def false_branch(_):
-        return {'char': {}}
-        
+def input_dummy_helper(all_inputs):
     t = relu(getn(getv(all_inputs, 'timer')))
     s = "test string."
-    i = jnp.minimum(round(t // 10), len(s) - 1)
- 
-    return jax.lax.cond(t % 10 == 0, true_branch, false_branch, operand=None) 
-    # the following is re-written in a JAX-friendly way
-    # return {'char': {s[i:i+1]: 1.0} if t % 10 == 0 else {}}
+    i = min(round(t // 10), len(s) - 1)
+    return {'char': {s[i:i+1]: 1.0} if t % 10 == 0 else {}}
+
+def input_dummy(all_inputs):
+    return jax.lax.stop_gradient(input_dummy_helper(all_inputs))
 
 def output_dummy(all_inputs):
     return {'dict-1': getv(all_inputs, 'dict-1'), 'dict-2': getv(all_inputs, 'dict-2')}
