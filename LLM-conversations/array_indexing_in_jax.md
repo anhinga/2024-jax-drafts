@@ -198,12 +198,28 @@ In JAX, code is traced when it is part of a computation that is transformed by f
 
    * Example:
 
-      ```python
+```python
       @jax.jit
       def traced_function(x):
           return x + 1
 
       def not_traced_function(y):
           return y * 2
-      ```    
+```    
 
+  **2. Separate Non-Traced Code:**
+
+   * If you need a specific part of your computation not to be traced, keep that code in a separate function that is not decorated with JAX transformations.
+
+   * Example:
+
+```python
+      def pre_process(x):
+          # Non-traced code here
+          return x * 2
+
+      jax.jit
+      def traced_function(x):
+          x = pre_process(x)
+          return x + 1
+```
