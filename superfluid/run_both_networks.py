@@ -60,8 +60,8 @@ print(time.time()-start_time, " seconds")
 """
 
 def loss_fn(changing_output):
-    trace, _ = reduce(one_iteration, range(2), ({}, {'input': {}, 'output': changing_output}))
-    trace_manual, _ = reduce(one_iteration, range(2), ({}, {'input': {}, 'output': initial_output_manual}))
+    trace, _ = reduce(one_iteration, range(140), ({}, {'input': {}, 'output': changing_output}))
+    trace_manual, _ = reduce(one_iteration, range(140), ({}, {'input': {}, 'output': initial_output_manual}))
     first = [trace[key]['input']['output']['dict-1'][':number'] for key in trace if key != 0]
     second = [trace[key]['input']['output']['dict-2'][':number'] for key in trace if key != 0]
     first_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace_manual if key != 0]
@@ -101,10 +101,18 @@ def step(changing_output, opt_state):
     print(time.time()-start_time, " seconds to apply optimizer update")
     
     return new_tree, opt_state, loss
-    
+   
+import pickle
+   
 # Run optimization for 3 steps
-for n_step in range(3):
+for n_step in range(10):
     changing_output, opt_state, loss = step(changing_output, opt_state)
+    start_time = time.time()
+    with open('changing_output.pkl', 'wb') as f:
+        pickle.dump(changing_output, f)
+    with open('opt_state.pkl', 'wb') as f:
+        pickle.dump(opt_state, f)
+    print(time.time()-start_time, " seconds to pickle the checkpoint")
     print(f'step: {n_step} loss: {loss}')
 
 """
