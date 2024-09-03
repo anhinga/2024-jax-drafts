@@ -98,3 +98,11 @@ Loss: 3.4878687858581543
 >>> print(random_tree)
 {'branch1': {'0': Array(1., dtype=float32), '1': Array(0.12355387, dtype=float32), '2': Array(1., dtype=float32)}, 'branch2': {'leaf1': Array(-0.6054506, dtype=float32), 'leaf2': Array(1., dtype=float32)}}
 ```
+
+---
+
+**Subsequent conversations:**
+
+[structure_of_optax_state.md](structure_of_optax_state.md)
+
+[use_stop_gradient.md](use_stop_gradient.md)
