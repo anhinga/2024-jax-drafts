@@ -238,7 +238,7 @@ In JAX, code is traced when it is part of a computation that is transformed by f
           return x + 1
 ```
 
-**NOTE:** I am omitted further parts of the GPT-4o response; it looks like `jax.lax.stop_gradient` is what we need here.
+**NOTE:** I have omitted further parts of the GPT-4o response; it looks like `jax.lax.stop_gradient` is what we need here.
 
 https://jax.readthedocs.io/en/latest/_autosummary/jax.lax.stop_gradient.html
 
