@@ -166,3 +166,42 @@ print(result)
   * **Pre-process Strings:** Extract or manipulate strings before passing them to JAX functions to avoid conversion issues.
 
 This approach ensures that your code works correctly without running into type conversion errors.
+
+**NOTE:** But let's see, if this can be done without drastic restructurings (surely, I don't need gradients to flow
+through string manipulations in an input-simulating neuron, but I'd rather not do any drastic code restructuring
+to stop those gradients from flowing).
+
+**ME:**
+
+Thanks! So, what determines which code is traced and which code is not traced? Is there any way to exercise a more fine-grained control and explicitly mark a function or a code fragment as "not jax traced"?
+
+**GPT-4o:**
+
+In JAX, code is traced when it is part of a computation that is transformed by functions like `jax.jit`, `jax.grad`, `jax.vmap`, or `jax.pmap`. When you apply these transformations to a function, JAX traces the function to build a computational graph rather than executing the code immediately. This tracing process converts the operations into symbolic representations that can be optimized and executed on hardware like GPUs or TPUs.
+
+**What Determines Whether Code is Traced:**
+
+  * **Traced Code:**
+    * Code inside functions that are decorated or transformed by JAX functions (`jit`, `grad`, `vmap`, etc.) is traced.
+    * Any operation on variables that are traced will also be traced, meaning those operations are converted into JAX's intermediate representation.
+    * Control flow (like `if`, `while`, `for` loops) that depends on traced values is also traced.
+
+  * **Non-Traced Code:**
+    * Code that runs outside of any JAX-transformed function is not traced.
+    * Code that operates on non-traced values (concrete Python values) inside a JAX-transformed function may still execute without tracing, depending on how it interacts with the traced code.
+
+**How to Exercise Fine-Grained Control:**
+
+  **1. Use `jax.jit` Selectively:**
+    * You can apply `jax.jit` to only specific functions rather than your entire codebase. This way, only those functions are traced.
+    * Example:
+
+      ```python
+      @jax.jit
+      def traced_function(x):
+          return x + 1
+
+      def not_traced_function(y):
+          return y * 2
+      ```    
+
