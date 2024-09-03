@@ -60,14 +60,14 @@ print(time.time()-start_time, " seconds")
 """
 
 def loss_fn(changing_output):
-    trace, _ = reduce(one_iteration, range(1), ({}, {'input': {}, 'output': changing_output}))
-    trace_manual, _ = reduce(one_iteration, range(1), ({}, {'input': {}, 'output': initial_output_manual}))
-    first = [trace[key]['input']['output']['dict-1'][':number'] for key in trace]
-    second = [trace[key]['input']['output']['dict-2'][':number'] for key in trace]
-    first_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace]
-    second_manual = [trace_manual[key]['input']['output']['dict-2'][':number'] for key in trace]
-    unregularized_loss = sum(square(x, y) for x, y in zip(first, first_manual)) + \
-                         sum(square(x, y) for x, y in zip(second, second_manual))    
+    trace, _ = reduce(one_iteration, range(2), ({}, {'input': {}, 'output': changing_output}))
+    trace_manual, _ = reduce(one_iteration, range(2), ({}, {'input': {}, 'output': initial_output_manual}))
+    first = [trace[key]['input']['output']['dict-1'][':number'] for key in trace if key != 0]
+    second = [trace[key]['input']['output']['dict-2'][':number'] for key in trace if key != 0]
+    first_manual = [trace_manual[key]['input']['output']['dict-1'][':number'] for key in trace_manual if key != 0]
+    second_manual = [trace_manual[key]['input']['output']['dict-2'][':number'] for key in trace_manual if key != 0]
+    unregularized_loss = sum(square(x - y) for x, y in zip(first, first_manual)) + \
+                         sum(square(x - y) for x, y in zip(second, second_manual))    
     # TODO: ADD REGULARIZATION (STANDARD AND NOVEL)
     loss = unregularized_loss
     return loss
