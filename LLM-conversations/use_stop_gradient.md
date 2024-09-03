@@ -247,3 +247,8 @@ https://jax.readthedocs.io/en/latest/_tutorials/advanced-autodiff.html
 https://www.kaggle.com/code/aakashnain/tf-jax-tutorials-part-9-autodiff-in-jax
 
 JAX itself is using `stop_gradient` inside its code in various places.
+
+**Unfortunately,** this was not enough to prevent tracing through the code
+screened by stop_gradient. I had to comment out the @jax.jit decorator
+in front of the step function (let's see, if that would be enough;
+of course, this might also lead to a slowdown).
