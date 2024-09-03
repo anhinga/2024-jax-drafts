@@ -223,3 +223,19 @@ In JAX, code is traced when it is part of a computation that is transformed by f
           x = pre_process(x)
           return x + 1
 ```
+
+  **3. Use jax.lax.stop_gradient:**
+
+   * You can prevent gradients from flowing through certain parts of your computation by using `jax.lax.stop_gradient`, which effectively marks those parts as "non-differentiable."
+
+   * This doesn’t stop tracing but does control where gradients are calculated.
+
+   * Example:
+
+```python
+      def traced_function(x):
+          x = jax.lax.stop_gradient(x)  # No gradients through this part
+          return x + 1
+```
+
+{TO BE CONTINUED, but it looks like `jax.lax.stop_gradient` is what we need here.]
