@@ -100,6 +100,28 @@ about to compute gradient
 0.3238065242767334  seconds to apply optimizer update
 step: 1 loss: 119.47352600097656
 about to compute gradient
+1553.8293912410736  seconds to compute gradient
+0.003979206085205078  seconds to apply mask to gradient
+0.738060474395752  seconds to compute optimizer update
+0.3301262855529785  seconds to apply optimizer update
+step: 2 loss: 79.21060180664062
+about to compute gradient
+1546.7848880290985  seconds to compute gradient
+0.003988742828369141  seconds to apply mask to gradient
+0.7077651023864746  seconds to compute optimizer update
+0.3258821964263916  seconds to apply optimizer update
+step: 3 loss: 124.45919036865234
+about to compute gradient
+1543.0470190048218  seconds to compute gradient
+0.0039577484130859375  seconds to apply mask to gradient
+0.7192633152008057  seconds to compute optimizer update
+0.3316986560821533  seconds to apply optimizer update
+step: 4 loss: 76.60785675048828
 ```
 
-still running
+too early to say if this learning rate would work
+or if it would need adjustment
+
+we need to be ready to adjust learning rate
+in the process of running, and also to have some
+checkpointing ready
