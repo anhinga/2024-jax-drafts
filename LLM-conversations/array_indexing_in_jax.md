@@ -194,9 +194,9 @@ In JAX, code is traced when it is part of a computation that is transformed by f
 
   **1. Use `jax.jit` Selectively:**
 
-    * You can apply `jax.jit` to only specific functions rather than your entire codebase. This way, only those functions are traced.
+   * You can apply `jax.jit` to only specific functions rather than your entire codebase. This way, only those functions are traced.
 
-    * Example:
+   * Example:
 
       ```python
       @jax.jit
