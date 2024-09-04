@@ -199,6 +199,15 @@ about to compute gradient
 0.1066884994506836  seconds to pickle the checkpoint
 step: 8 loss: 222.498046875
 about to compute gradient
+3103.7486720085144  seconds to compute gradient
+0.0374302864074707  seconds to apply mask to gradient
+1.104463815689087  seconds to compute optimizer update
+0.4490032196044922  seconds to apply optimizer update
+0.23119449615478516  seconds to pickle the checkpoint
+step: 9 loss: 204.92800903320312
 ```
 
-(still running)
+Interesting fluctuation of run time at the end 
+(I should look at how much does this load CPU cores; 
+the last iteration was during a Google Meet meeting being run
+on the same laptop; perhaps this is what has caused a slow-down).
