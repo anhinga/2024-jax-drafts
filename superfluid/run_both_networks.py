@@ -101,6 +101,9 @@ def step(changing_output, opt_state):
     print(time.time()-start_time, " seconds to apply optimizer update")
     
     return new_tree, opt_state, loss
+    
+start_time = time.time()
+print("initial loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")
    
 import pickle
    
