@@ -106,3 +106,5 @@ Loss: 3.4878687858581543
 [structure_of_optax_state.md](structure_of_optax_state.md)
 
 [use_stop_gradient.md](use_stop_gradient.md)
+
+[learning_rate_and_checkpointing.md](learning_rate_and_checkpointing.md)
