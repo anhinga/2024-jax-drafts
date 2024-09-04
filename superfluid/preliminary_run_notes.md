@@ -125,3 +125,80 @@ or if it would need adjustment
 we need to be ready to adjust learning rate
 in the process of running, and also to have some
 checkpointing ready
+
+---
+
+Running networks for 140 iterations only
+
+10 optimization steps, checkpointing is on
+
+```
+size (leaves): 2944 2906 37 1
+1.0036799907684326  seconds
+about to compute gradient
+2373.5123534202576  seconds to compute gradient
+0.023442506790161133  seconds to apply mask to gradient
+19.435649871826172  seconds to compute optimizer update
+0.3545393943786621  seconds to apply optimizer update
+0.10198521614074707  seconds to pickle the checkpoint
+step: 0 loss: 412.6490783691406
+about to compute gradient
+2340.6451737880707  seconds to compute gradient
+0.02195882797241211  seconds to apply mask to gradient
+0.7814826965332031  seconds to compute optimizer update
+0.34032106399536133  seconds to apply optimizer update
+0.1131739616394043  seconds to pickle the checkpoint
+step: 1 loss: 323.5963134765625
+about to compute gradient
+2281.3472793102264  seconds to compute gradient
+0.022055864334106445  seconds to apply mask to gradient
+0.7560412883758545  seconds to compute optimizer update
+0.34178829193115234  seconds to apply optimizer update
+0.10645842552185059  seconds to pickle the checkpoint
+step: 2 loss: 215.85595703125
+about to compute gradient
+2407.3309876918793  seconds to compute gradient
+0.019995450973510742  seconds to apply mask to gradient
+0.8070964813232422  seconds to compute optimizer update
+0.3442666530609131  seconds to apply optimizer update
+0.11374163627624512  seconds to pickle the checkpoint
+step: 3 loss: 380.611572265625
+about to compute gradient
+2328.384670972824  seconds to compute gradient
+0.02153635025024414  seconds to apply mask to gradient
+0.7688148021697998  seconds to compute optimizer update
+0.35172367095947266  seconds to apply optimizer update
+0.10402727127075195  seconds to pickle the checkpoint
+step: 4 loss: 221.69467163085938
+about to compute gradient
+2317.1863255500793  seconds to compute gradient
+0.019730567932128906  seconds to apply mask to gradient
+0.7940406799316406  seconds to compute optimizer update
+0.35886120796203613  seconds to apply optimizer update
+0.12056446075439453  seconds to pickle the checkpoint
+step: 5 loss: 210.8854217529297
+about to compute gradient
+2394.3651456832886  seconds to compute gradient
+0.021951675415039062  seconds to apply mask to gradient
+0.7762308120727539  seconds to compute optimizer update
+0.34935426712036133  seconds to apply optimizer update
+0.10630202293395996  seconds to pickle the checkpoint
+step: 6 loss: 228.70033264160156
+about to compute gradient
+2355.9763453006744  seconds to compute gradient
+0.01994919776916504  seconds to apply mask to gradient
+0.7715718746185303  seconds to compute optimizer update
+0.34795498847961426  seconds to apply optimizer update
+0.10383200645446777  seconds to pickle the checkpoint
+step: 7 loss: 231.68438720703125
+about to compute gradient
+2404.625077724457  seconds to compute gradient
+0.019312143325805664  seconds to apply mask to gradient
+0.76576828956604  seconds to compute optimizer update
+0.35272955894470215  seconds to apply optimizer update
+0.1066884994506836  seconds to pickle the checkpoint
+step: 8 loss: 222.498046875
+about to compute gradient
+```
+
+(still running)
