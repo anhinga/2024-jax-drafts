@@ -211,3 +211,20 @@ Interesting fluctuation of run time at the end
 (I should look at how much does this load CPU cores; 
 the last iteration was during a Google Meet meeting being run
 on the same laptop; perhaps this is what has caused a slow-down).
+
+---
+
+The loss printed after step 0 is initial loss, not the loss after update.
+
+The loss printed after each step in the current code is the loss
+which corresponds to the state before the update, not after the update
+
+Establised by explicitly computing initial loss before doing steps
+
+| network iterations | initial loss   | computed in seconds |
+|:------------------:|:--------------:|:-------------------:|
+|    140             |    412.64908   |       54.0029       |
+|    101             |    169.56921   |       39.6782       |
+|     11             |    0.3548554   |       4.04467       |
+|      2             |    0.0354757   |       0.64963       |
+
