@@ -36,3 +36,9 @@ Potential solutions:
   **Selective Use of `jax.jit`:** If you use `jax.jit` selectively, ensure the decorated functions interact properly with the rest of the code. It’s possible that by only applying `jax.jit` to one function, some dependencies or assumptions break after the first call.
 
 If you can share more details about the error or the behavior you observe after the first iteration, I can help diagnose the issue more specifically.
+
+**NOTE:**
+
+There is also this interesting thing: https://jax.readthedocs.io/en/latest/_autosummary/jax.disable_jit.html
+
+Perhaps, one could avoid this super-ugliness with it (TODO: try this).
