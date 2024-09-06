@@ -37,6 +37,10 @@ Potential solutions:
 
 If you can share more details about the error or the behavior you observe after the first iteration, I can help diagnose the issue more specifically.
 
+**NOTE:** The conversation continues further at https://chatgpt.com/share/dcda0b70-5a83-410c-ab24-1d1c65e6ed0b
+
+It has useful information about JAX-specific loops, about intricacies of usage of jax.lax.scan function, etc. 
+
 **NOTE:**
 
 There is also this interesting thing: https://jax.readthedocs.io/en/latest/_autosummary/jax.disable_jit.html
