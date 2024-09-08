@@ -53,6 +53,39 @@ Perhaps, one could avoid this super-ugliness with it (TODO: try this).
 
 That's super-unpleasant. How does one checkpoint inside a jax.jit? (TODO: investigate)
 
-See the discussion on pickling, printing, and slow compilated added to the end of
+See the discussion on pickling, printing, and slow compilation added to the end of
 
 https://chatgpt.com/share/dcda0b70-5a83-410c-ab24-1d1c65e6ed0b
+
+We should watch for slow compilation because GPT-4o says, in particular
+
+> **Repeatedly long compilations:** If every iteration or function call involves re-compilation and takes over a minute, it may indicate that something is causing JAX to repeatedly trace and recompile, which shouldn't happen in typical JAX workflows.
+
+This might be a problem with very dynamic configurations
+
+**SOME SUCCESS:**
+
+The program worked end-to-end; no printout of loss values though due to the issues
+mentioned above which we still need to resolve:
+
+```
+size (leaves): 2944 2906 37 1
+0.7891635894775391  seconds
+initial loss  0.035475716  computed in  0.7960395812988281  seconds
+about to compute gradient
+21.114875316619873  seconds to compute gradient
+0.0020148754119873047  seconds to apply mask to gradient
+8.733324527740479  seconds to compute optimizer update
+0.9306800365447998  seconds to apply optimizer update
+step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Traced<ShapedArray(float32[])>with<DynamicJaxprTrace(level=2/0)>
+2024-09-08 12:07:09.900690: E external/xla/xla/service/slow_operation_alarm.cc:65]
+********************************
+[Compiling module jit_n_steps] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+2024-09-08 12:13:16.846290: E external/xla/xla/service/slow_operation_alarm.cc:133] The operation took 8m6.9600373s
+
+********************************
+[Compiling module jit_n_steps] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+>>>
+```
