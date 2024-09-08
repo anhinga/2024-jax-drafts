@@ -52,3 +52,7 @@ Perhaps, one could avoid this super-ugliness with it (TODO: try this).
 > The error occurred in the __reduce__ method, which may indicate an attempt to serialize/pickle a traced value.
 
 That's super-unpleasant. How does one checkpoint inside a jax.jit? (TODO: investigate)
+
+See the discussion on pickling, printing, and slow compilated added to the end of
+
+https://chatgpt.com/share/dcda0b70-5a83-410c-ab24-1d1c65e6ed0b
