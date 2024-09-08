@@ -46,3 +46,9 @@ It has useful information about JAX-specific loops, about intricacies of usage o
 There is also this interesting thing: https://jax.readthedocs.io/en/latest/_autosummary/jax.disable_jit.html
 
 Perhaps, one could avoid this super-ugliness with it (TODO: try this).
+
+**NOTE:**
+
+> The error occurred in the __reduce__ method, which may indicate an attempt to serialize/pickle a traced value.
+
+That's super-unpleasant. How does one checkpoint inside a jax.jit? (TODO: investigate)
