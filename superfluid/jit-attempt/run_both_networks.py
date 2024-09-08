@@ -127,12 +127,12 @@ def n_steps(changing_output, opt_state):
     def loop_body(carry, n_step):
         carry_val, changing_output, opt_state = carry  # Unpack the carry
         changing_output, opt_state, loss = step(changing_output, opt_state)
-        start_time = time.time()
-        with open('changing_output.pkl', 'wb') as f:
-            pickle.dump(changing_output, f)
-        with open('opt_state.pkl', 'wb') as f:
-            pickle.dump(opt_state, f)
-        print(time.time()-start_time, " seconds to pickle the checkpoint")
+        #start_time = time.time()
+        #with open('changing_output.pkl', 'wb') as f:
+        #    pickle.dump(changing_output, f)
+        #with open('opt_state.pkl', 'wb') as f:
+        #    pickle.dump(opt_state, f)
+        #print(time.time()-start_time, " seconds to pickle the checkpoint")
         print(f'step: {n_step} loss: {loss}')
         # carry is the loop state, n_step is the iteration number
         new_carry_val = carry_val + n_step  # Example update
