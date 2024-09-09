@@ -89,3 +89,41 @@ step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Trace
 ********************************
 >>>
 ```
+
+---
+
+One is supposed to use jax.debug.print() as in
+
+https://jax.readthedocs.io/en/latest/debugging/index.html
+
+https://jax.readthedocs.io/en/latest/debugging/print_breakpoint.html
+
+However, in practice, it does not seem to work like advertised,
+and GPT-4o also seems to say that it should not be used like this in
+
+https://chatgpt.com/share/dcda0b70-5a83-410c-ab24-1d1c65e6ed0b
+
+so I am not sure what's the correct way:
+
+```
+size (leaves): 2944 2906 37 1
+0.7916030883789062  seconds
+initial loss  0.03547571  computed in  0.8783204555511475  seconds
+about to compute gradient
+21.286386251449585  seconds to compute gradient
+0.0010318756103515625  seconds to apply mask to gradient
+8.418695449829102  seconds to compute optimizer update
+1.3830230236053467  seconds to apply optimizer update
+2024-09-09 01:13:06.997504: E external/xla/xla/service/slow_operation_alarm.cc:65]
+********************************
+[Compiling module jit_n_steps] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+2024-09-09 01:18:44.571707: E external/xla/xla/service/slow_operation_alarm.cc:133] The operation took 7m37.5899471s
+
+********************************
+[Compiling module jit_n_steps] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Traced<ShapedArray(float32[])>with<DynamicJaxprTrace(level=2/0)>
+step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Traced<ShapedArray(float32[])>with<DynamicJaxprTrace(level=2/0)>
+step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Traced<ShapedArray(float32[])>with<DynamicJaxprTrace(level=2/0)>
+```
