@@ -98,12 +98,12 @@ https://jax.readthedocs.io/en/latest/debugging/index.html
 
 https://jax.readthedocs.io/en/latest/debugging/print_breakpoint.html
 
-However, in practice, it does not seem to work like advertised,
-and GPT-4o also seems to say that it should not be used like this in
+However, this only works for values which can be computed during
+tracing, the following conversation includes a more detailed explanation now:
 
 https://chatgpt.com/share/dcda0b70-5a83-410c-ab24-1d1c65e6ed0b
 
-so I am not sure what's the correct way:
+The version which is currently committed still needs to be modified further:
 
 ```
 size (leaves): 2944 2906 37 1
