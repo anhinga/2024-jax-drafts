@@ -133,7 +133,7 @@ def n_steps(changing_output, opt_state):
         #with open('opt_state.pkl', 'wb') as f:
         #    pickle.dump(opt_state, f)
         #print(time.time()-start_time, " seconds to pickle the checkpoint")
-        print(f'step: {n_step} loss: {loss}')
+        jax.debug.print(f'step: {n_step} loss: {loss}')
         # carry is the loop state, n_step is the iteration number
         new_carry_val = carry_val + n_step  # Example update
         return (new_carry_val, changing_output, opt_state), new_carry_val
