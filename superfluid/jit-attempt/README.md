@@ -128,6 +128,8 @@ step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Trace
 step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Traced<ShapedArray(float32[])>with<DynamicJaxprTrace(level=2/0)>
 ```
 
+---
+
 Let's take this jax.debug.print() out, and run one step at a time first:
 
 ```
@@ -179,4 +181,72 @@ loss  2.1855567e-05  computed in  1.6253340244293213  seconds
 
 Yes, it looks like it starts progressing OK and saving time.
 
+It looks like it need to jit-compile twice in our workflow before settling in.
+
+Each jit-compilation is taking quite a long time, unfortunately.
+
 Let's go back to 3 at a time:
+
+```
+size (leaves): 2944 2906 37 1
+0.8257303237915039  seconds
+initial loss  0.035475716  computed in  0.8300740718841553  seconds
+about to compute gradient
+22.04065179824829  seconds to compute gradient
+0.001992464065551758  seconds to apply mask to gradient
+8.976167678833008  seconds to compute optimizer update
+0.9265081882476807  seconds to apply optimizer update
+2024-09-10 00:33:21.087422: E external/xla/xla/service/slow_operation_alarm.cc:65]
+********************************
+[Compiling module jit_n_steps] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+2024-09-10 00:39:11.512502: E external/xla/xla/service/slow_operation_alarm.cc:133] The operation took 7m50.4399906s
+
+********************************
+[Compiling module jit_n_steps] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+>>> start_time = time.time()
+>>> print("initial loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")
+initial loss  0.0073925783  computed in  0.9378523826599121  seconds
+>>> start_time = time.time()
+>>> changing_output, opt_state = n_steps(changing_output, opt_state)
+about to compute gradient
+21.542019367218018  seconds to compute gradient
+0.002992391586303711  seconds to apply mask to gradient
+8.198374271392822  seconds to compute optimizer update
+1.855971097946167  seconds to apply optimizer update
+2024-09-10 00:58:18.900262: E external/xla/xla/service/slow_operation_alarm.cc:133] The operation took 10m7.7993661s
+
+********************************
+[Compiling module jit_n_steps] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")\
+...
+loss  0.008919513  computed in  882.9559900760651  seconds
+>>> start_time = time.time()
+>>> changing_output, opt_state = n_steps(changing_output, opt_state)
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")\
+...
+loss  0.0028272693  computed in  2.696471929550171  seconds
+>>> start_time = time.time()
+>>> changing_output, opt_state = n_steps(changing_output, opt_state)
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")\
+...
+loss  0.00082237046  computed in  2.217298984527588  seconds
+>>> start_time = time.time()
+>>> changing_output, opt_state = n_steps(changing_output, opt_state)
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")\
+...
+loss  0.00017617253  computed in  1.3293540477752686  seconds
+>>> start_time = time.time()
+>>> changing_output, opt_state = n_steps(changing_output, opt_state)
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")\
+...
+loss  0.00043086061  computed in  1.6900997161865234  seconds
+>>>
+```
+
+It does save tons of time, after it stops recompiling.
+
+Correctness (meaning that the sequence of loss values does not depend on how I split it, 
+and does not depend on this optimization), still needs to be verified.
