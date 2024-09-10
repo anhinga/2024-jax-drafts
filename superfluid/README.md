@@ -39,3 +39,7 @@ a larger coefficient than usual regularization terms, so that it impact on these
 [jit-attempt](jit-attempt) - making it work with jax.jit
 
 [jit-phase2](jit-phase2) - next phase of jax.jit exploration
+
+decided not to pursue using `jax.jit` right now, but to do some light exploration of a "no jit" setup
+
+[no-jit-run-2.md](no-jit-run-2.md) - continue "no jit" exploration
