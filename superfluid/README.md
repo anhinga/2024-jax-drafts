@@ -31,3 +31,11 @@ or its square must be low.
 
 (It's still fine to include these weights into usual regularization terms. This new regularization term should have
 a larger coefficient than usual regularization terms, so that it impact on these particular weights dominate.)
+
+---
+
+[preliminary_run_notes.md](preliminary_run_notes.md) - first runs (no jax.jit)
+
+[jit-attempt](jit-attempt) - making it work with jax.jit
+
+[jit-phase2](jit-phase2) - next phase of jax.jit exploration
