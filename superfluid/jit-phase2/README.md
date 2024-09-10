@@ -35,3 +35,7 @@ Traceback (most recent call last):
     changing_output, opt_state = n_steps(changing_output, opt_state)
 MemoryError: bad allocation
 ```
+
+This is a comment on this situation from GPT-4o:
+
+https://chatgpt.com/share/fc3beba3-79fe-43d4-a9b2-66468a6a2f8f
