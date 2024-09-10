@@ -127,3 +127,56 @@ step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Trace
 step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Traced<ShapedArray(float32[])>with<DynamicJaxprTrace(level=2/0)>
 step: Traced<ShapedArray(int32[])>with<DynamicJaxprTrace(level=2/0)> loss: Traced<ShapedArray(float32[])>with<DynamicJaxprTrace(level=2/0)>
 ```
+
+Let's take this jax.debug.print() out, and run one step at a time first:
+
+```
+size (leaves): 2944 2906 37 1
+0.8519880771636963  seconds
+initial loss  0.035475712  computed in  0.8386034965515137  seconds
+about to compute gradient
+24.922187328338623  seconds to compute gradient
+0.001995563507080078  seconds to apply mask to gradient
+9.084045886993408  seconds to compute optimizer update
+0.9593539237976074  seconds to apply optimizer update
+>>> start_time = time.time()
+>>> print("initial loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")
+initial loss  0.05428444  computed in  1.9356799125671387  seconds
+>>> start_time = time.time()
+>>> changing_output, opt_state = n_steps(changing_output, opt_state)
+about to compute gradient
+21.254416704177856  seconds to compute gradient
+0.0029921531677246094  seconds to apply mask to gradient
+8.152381658554077  seconds to compute optimizer update
+1.8211722373962402  seconds to apply optimizer update
+2024-09-10 00:24:16.277113: E external/xla/xla/service/slow_operation_alarm.cc:65]
+********************************
+[Compiling module jit_n_steps] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+2024-09-10 00:24:55.221611: E external/xla/xla/service/slow_operation_alarm.cc:133] The operation took 2m38.967864s
+
+********************************
+[Compiling module jit_n_steps] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")
+loss  0.0007292521  computed in  340.73206329345703  seconds
+>>> start_time = time.time()
+>>> changing_output, opt_state = n_steps(changing_output, opt_state)
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")
+loss  0.007392578  computed in  4.688348293304443  seconds
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")
+loss  0.007392578  computed in  17.867120027542114  seconds
+>>> start_time = time.time()
+>>> changing_output, opt_state = n_steps(changing_output, opt_state)
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")
+loss  0.012197803  computed in  1.7861933708190918  seconds
+>>> start_time = time.time()
+>>> changing_output, opt_state = n_steps(changing_output, opt_state)
+>>> print("loss ", loss_fn(changing_output), " computed in ", time.time()-start_time, " seconds")
+loss  2.1855567e-05  computed in  1.6253340244293213  seconds
+>>>
+```
+
+Yes, it looks like it starts progressing OK and saving time.
+
+Let's go back to 3 at a time:
