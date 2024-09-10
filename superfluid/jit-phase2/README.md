@@ -9,7 +9,7 @@ and if it scales unfavorably, it might be a showstopper, or, at least,
 might force a very careful design, because making changes and restarting
 from a checkpoint might still be very expensive, if jit compilation is superlong).
 
-**note**: so far compile time looks horrible, takes tons of RAM (way over 10GB)
+**note**: so far compile time looks horrible, takes tons of RAM (reaches 28GB before starting to garbage collect)
 and runs forever (that's for length 11). **so I am not optimistic
 that this will be usable right now.**
 
@@ -39,3 +39,21 @@ MemoryError: bad allocation
 This is a comment on this situation from GPT-4o:
 
 https://chatgpt.com/share/fc3beba3-79fe-43d4-a9b2-66468a6a2f8f
+
+I doubt that this is an out of memory (although I have not
+observed it in action, but it has been noticeably receding
+from peak usage before giving this bug, when I reproduced
+it on a newly rebooted machine without much software
+running).
+
+Anyway, it would take a lot of work (and collaboration with
+JAX team to make jax.jit work for this use case).
+
+I can continue exploring without jax.jit on the background,
+but I am constrained by this being more than 1 order of magnitude
+slower than my Julia experiments. I'll probably try this path,
+but on background, with low priority.
+
+So we should ponder various alternatives again. They include
+revisiting Julia ecosystem and transpiling trees into flat
+structures.
