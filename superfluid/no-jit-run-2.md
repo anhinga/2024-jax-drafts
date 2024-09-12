@@ -1144,6 +1144,175 @@ about to compute gradient
 0.35497331619262695  seconds to apply optimizer update
 0.11760592460632324  seconds to pickle the checkpoint
 step: 5 loss: 193.21652221679688
+about to compute gradient
+2239.6150612831116  seconds to compute gradient
+0.0039479732513427734  seconds to apply mask to gradient
+0.6837029457092285  seconds to compute optimizer update
+0.3268318176269531  seconds to apply optimizer update
+0.08940720558166504  seconds to pickle the checkpoint
+step: 6 loss: 193.46231079101562
+about to compute gradient
+2198.7869160175323  seconds to compute gradient
+0.004954099655151367  seconds to apply mask to gradient
+0.6792869567871094  seconds to compute optimizer update
+0.3214879035949707  seconds to apply optimizer update
+0.1148824691772461  seconds to pickle the checkpoint
+step: 7 loss: 193.37417602539062
+about to compute gradient
+2264.0391252040863  seconds to compute gradient
+0.0051195621490478516  seconds to apply mask to gradient
+0.6811292171478271  seconds to compute optimizer update
+0.3137550354003906  seconds to apply optimizer update
+0.10854434967041016  seconds to pickle the checkpoint
+step: 8 loss: 192.99452209472656
+about to compute gradient
+2187.409650325775  seconds to compute gradient
+0.005133390426635742  seconds to apply mask to gradient
+0.6767656803131104  seconds to compute optimizer update
+0.3101224899291992  seconds to apply optimizer update
+0.09097599983215332  seconds to pickle the checkpoint
+step: 9 loss: 192.3944091796875
+about to compute gradient
+2198.742211818695  seconds to compute gradient
+0.004022121429443359  seconds to apply mask to gradient
+0.6704435348510742  seconds to compute optimizer update
+0.31938648223876953  seconds to apply optimizer update
+0.09340381622314453  seconds to pickle the checkpoint
+step: 10 loss: 191.66334533691406
+about to compute gradient
+2200.1133618354797  seconds to compute gradient
+0.006025791168212891  seconds to apply mask to gradient
+0.7007510662078857  seconds to compute optimizer update
+0.31638216972351074  seconds to apply optimizer update
+0.11505818367004395  seconds to pickle the checkpoint
+step: 11 loss: 190.89724731445312
+about to compute gradient
+2203.471386909485  seconds to compute gradient
+0.0040547847747802734  seconds to apply mask to gradient
+0.6642007827758789  seconds to compute optimizer update
+0.3181631565093994  seconds to apply optimizer update
+0.09096479415893555  seconds to pickle the checkpoint
+step: 12 loss: 190.18783569335938
+about to compute gradient
+2188.0064301490784  seconds to compute gradient
+0.005532264709472656  seconds to apply mask to gradient
+0.6782341003417969  seconds to compute optimizer update
+0.31219482421875  seconds to apply optimizer update
+0.09034204483032227  seconds to pickle the checkpoint
+step: 13 loss: 189.61102294921875
+about to compute gradient
+2205.656327724457  seconds to compute gradient
+0.0066661834716796875  seconds to apply mask to gradient
+0.6884162425994873  seconds to compute optimizer update
+0.3160388469696045  seconds to apply optimizer update
+0.0897665023803711  seconds to pickle the checkpoint
+step: 14 loss: 189.21649169921875
+about to compute gradient
+2209.940738916397  seconds to compute gradient
+0.006982088088989258  seconds to apply mask to gradient
+0.6828546524047852  seconds to compute optimizer update
+0.3109464645385742  seconds to apply optimizer update
+0.1062309741973877  seconds to pickle the checkpoint
+step: 15 loss: 189.0244140625
+about to compute gradient
+2605.804384469986  seconds to compute gradient
+0.005983591079711914  seconds to apply mask to gradient
+0.7077882289886475  seconds to compute optimizer update
+0.33025503158569336  seconds to apply optimizer update
+0.11232948303222656  seconds to pickle the checkpoint
+step: 16 loss: 189.0150146484375
+about to compute gradient
+2317.3006110191345  seconds to compute gradient
+0.005952358245849609  seconds to apply mask to gradient
+0.7298071384429932  seconds to compute optimizer update
+0.33646225929260254  seconds to apply optimizer update
+0.11192774772644043  seconds to pickle the checkpoint
+step: 17 loss: 189.13613891601562
+about to compute gradient
+2318.013795375824  seconds to compute gradient
+0.006307840347290039  seconds to apply mask to gradient
+0.7189674377441406  seconds to compute optimizer update
+0.35384058952331543  seconds to apply optimizer update
+0.09699440002441406  seconds to pickle the checkpoint
+step: 18 loss: 189.31903076171875
+about to compute gradient
+2305.8252561092377  seconds to compute gradient
+0.005992412567138672  seconds to apply mask to gradient
+0.7069351673126221  seconds to compute optimizer update
+0.31682705879211426  seconds to apply optimizer update
+0.10744380950927734  seconds to pickle the checkpoint
+step: 19 loss: 189.49118041992188
+about to compute gradient
+2253.5790779590607  seconds to compute gradient
+0.003952503204345703  seconds to apply mask to gradient
+0.6838769912719727  seconds to compute optimizer update
+0.31275510787963867  seconds to apply optimizer update
+0.10853910446166992  seconds to pickle the checkpoint
+step: 20 loss: 189.59567260742188
+about to compute gradient
+2254.4310183525085  seconds to compute gradient
+0.005982875823974609  seconds to apply mask to gradient
+0.6956682205200195  seconds to compute optimizer update
+0.3143129348754883  seconds to apply optimizer update
+0.09146547317504883  seconds to pickle the checkpoint
+step: 21 loss: 189.59974670410156
+about to compute gradient
+2270.346997976303  seconds to compute gradient
+0.005948066711425781  seconds to apply mask to gradient
+0.7103245258331299  seconds to compute optimizer update
+0.32137012481689453  seconds to apply optimizer update
+0.10161566734313965  seconds to pickle the checkpoint
+step: 22 loss: 189.5023956298828
+about to compute gradient
+2253.4603774547577  seconds to compute gradient
+0.005959510803222656  seconds to apply mask to gradient
+0.779522180557251  seconds to compute optimizer update
+0.33847546577453613  seconds to apply optimizer update
+0.10646796226501465  seconds to pickle the checkpoint
+step: 23 loss: 189.340576171875
+about to compute gradient
+2302.4618599414825  seconds to compute gradient
+0.00457453727722168  seconds to apply mask to gradient
+0.7061448097229004  seconds to compute optimizer update
+0.31797099113464355  seconds to apply optimizer update
+0.09607505798339844  seconds to pickle the checkpoint
+step: 24 loss: 189.13473510742188
+about to compute gradient
+2416.360837459564  seconds to compute gradient
+0.007965087890625  seconds to apply mask to gradient
+0.7714664936065674  seconds to compute optimizer update
+0.42562294006347656  seconds to apply optimizer update
+0.17594146728515625  seconds to pickle the checkpoint
+step: 25 loss: 188.9228515625
+about to compute gradient
+2445.8672029972076  seconds to compute gradient
+0.007432699203491211  seconds to apply mask to gradient
+0.8002774715423584  seconds to compute optimizer update
+0.3460080623626709  seconds to apply optimizer update
+0.13182878494262695  seconds to pickle the checkpoint
+step: 26 loss: 188.74095153808594
+about to compute gradient
+2569.37175822258  seconds to compute gradient
+0.007027864456176758  seconds to apply mask to gradient
+0.77996826171875  seconds to compute optimizer update
+0.34830498695373535  seconds to apply optimizer update
+0.15788674354553223  seconds to pickle the checkpoint
+step: 27 loss: 188.6033935546875
+about to compute gradient
+2510.5490770339966  seconds to compute gradient
+0.0059854984283447266  seconds to apply mask to gradient
+0.7471251487731934  seconds to compute optimizer update
+0.3329498767852783  seconds to apply optimizer update
+0.14974617958068848  seconds to pickle the checkpoint
+step: 28 loss: 188.51434326171875
+about to compute gradient
+2312.4290170669556  seconds to compute gradient
+0.00698089599609375  seconds to apply mask to gradient
+0.698544979095459  seconds to compute optimizer update
+0.3175923824310303  seconds to apply optimizer update
+0.09018993377685547  seconds to pickle the checkpoint
+step: 29 loss: 188.4663543701172
+>>>
 ```
 
 This does not look like a good convergence, especially observing
@@ -1153,6 +1322,7 @@ run (with a lower learning rate):
 https://github.com/anhinga/julia-flux-drafts/tree/main/arxiv-1606-09470-section3/May-August-2022/v0-1/feedforward-run-3
 
 But we also see from that log that one should not jump to conclusions,
-Adam optimizer often finds a way. 
+Adam optimizer often finds a way. But here it does indeed look like it
+is stuck in a local minimum.
 
 We do need to start looking at adding regularization.
