@@ -1064,4 +1064,95 @@ about to compute gradient
 0.34600162506103516  seconds to apply optimizer update
 0.13318824768066406  seconds to pickle the checkpoint
 step: 25 loss: 206.3524627685547
+about to compute gradient
+2420.629366159439  seconds to compute gradient
+0.006991863250732422  seconds to apply mask to gradient
+0.7087056636810303  seconds to compute optimizer update
+0.31377720832824707  seconds to apply optimizer update
+0.10711097717285156  seconds to pickle the checkpoint
+step: 26 loss: 201.1053009033203
+about to compute gradient
+2172.4596848487854  seconds to compute gradient
+0.0049860477447509766  seconds to apply mask to gradient
+0.6928491592407227  seconds to compute optimizer update
+0.3220062255859375  seconds to apply optimizer update
+0.09282541275024414  seconds to pickle the checkpoint
+step: 27 loss: 196.09564208984375
+about to compute gradient
+2181.1619913578033  seconds to compute gradient
+0.005376338958740234  seconds to apply mask to gradient
+0.6782784461975098  seconds to compute optimizer update
+0.31480884552001953  seconds to apply optimizer update
+0.09231019020080566  seconds to pickle the checkpoint
+step: 28 loss: 192.411865234375
+about to compute gradient
+2184.8079063892365  seconds to compute gradient
+0.004017353057861328  seconds to apply mask to gradient
+0.6882259845733643  seconds to compute optimizer update
+0.3100707530975342  seconds to apply optimizer update
+0.10490798950195312  seconds to pickle the checkpoint
+step: 29 loss: 190.34751892089844
+>>> for n_step in range(30):
+...     changing_output, opt_state, loss = step(changing_output, opt_state)
+...     start_time = time.time()
+...     with open('changing_output.pkl', 'wb') as f:
+...         pickle.dump(changing_output, f)
+...     with open('opt_state.pkl', 'wb') as f:
+...         pickle.dump(opt_state, f)
+...     print(time.time()-start_time, " seconds to pickle the checkpoint")
+...     print(f'step: {n_step} loss: {loss}')
+...
+about to compute gradient
+2177.796010017395  seconds to compute gradient
+0.005075931549072266  seconds to apply mask to gradient
+0.678217887878418  seconds to compute optimizer update
+0.31301093101501465  seconds to apply optimizer update
+0.0910484790802002  seconds to pickle the checkpoint
+step: 0 loss: 189.68411254882812
+about to compute gradient
+2170.0337920188904  seconds to compute gradient
+0.008182525634765625  seconds to apply mask to gradient
+0.6819124221801758  seconds to compute optimizer update
+0.3108365535736084  seconds to apply optimizer update
+0.10336160659790039  seconds to pickle the checkpoint
+step: 1 loss: 189.99539184570312
+about to compute gradient
+2163.453339576721  seconds to compute gradient
+0.005422353744506836  seconds to apply mask to gradient
+0.660703182220459  seconds to compute optimizer update
+0.3092501163482666  seconds to apply optimizer update
+0.0998680591583252  seconds to pickle the checkpoint
+step: 2 loss: 190.82220458984375
+about to compute gradient
+2184.493145942688  seconds to compute gradient
+0.004948854446411133  seconds to apply mask to gradient
+0.6822905540466309  seconds to compute optimizer update
+0.3193848133087158  seconds to apply optimizer update
+0.09250283241271973  seconds to pickle the checkpoint
+step: 3 loss: 191.7930908203125
+about to compute gradient
+2214.0191168785095  seconds to compute gradient
+0.004987239837646484  seconds to apply mask to gradient
+0.6986727714538574  seconds to compute optimizer update
+0.32569313049316406  seconds to apply optimizer update
+0.09272980690002441  seconds to pickle the checkpoint
+step: 4 loss: 192.63839721679688
+about to compute gradient
+2463.4133791923523  seconds to compute gradient
+0.004986286163330078  seconds to apply mask to gradient
+0.8088414669036865  seconds to compute optimizer update
+0.35497331619262695  seconds to apply optimizer update
+0.11760592460632324  seconds to pickle the checkpoint
+step: 5 loss: 193.21652221679688
 ```
+
+This does not look like a good convergence, especially observing
+that we are comparing with the first 30-40 iterations of this
+run (with a lower learning rate): 
+
+https://github.com/anhinga/julia-flux-drafts/tree/main/arxiv-1606-09470-section3/May-August-2022/v0-1/feedforward-run-3
+
+But we also see from that log that one should not jump to conclusions,
+Adam optimizer often finds a way. 
+
+We do need to start looking at adding regularization.
