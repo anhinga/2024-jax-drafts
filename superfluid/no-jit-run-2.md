@@ -1326,3 +1326,37 @@ Adam optimizer often finds a way. But here it does indeed look like it
 is stuck in a local minimum.
 
 We do need to start looking at adding regularization.
+
+---
+
+A bit of follow-up work with this run:
+
+This is how you unpickle:
+
+```
+>>> with open("changing_output_30.pkl", "rb") as f:
+...   c_o_30 = pickle.load(f)
+...
+>>> start_time = time.time()
+>>> print(time.time()-start_time, " seconds", loss_fn(c_o_30))
+2.5265626907348633  seconds 189.68411
+```
+
+Note, that our time measurements can be quite off, the time above is wrong (should be more careful):
+
+```
+>>> c_o_0 = create_tree(rng_key, initial_output)
+>>> start_time = time.time()
+>>> print(time.time()-start_time, " seconds", loss_fn(c_o_0))
+3.4235808849334717  seconds 412.64908
+```
+
+however, this is the result of `time.time()` being computed before
+`loss_fn(c_o_0)` is ready. The actual time here is
+
+```
+>>> start_time = time.time()
+>>> result = loss_fn(c_o_0)
+>>> print(time.time()-start_time, " seconds", result)
+62.56286406517029  seconds 412.64908
+```
